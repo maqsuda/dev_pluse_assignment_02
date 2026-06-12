@@ -25,7 +25,7 @@ const loginUserToDB = async (payLoad: { email: string; password: string }) => {
   };
 
   const accesToken = jwt.sign(jwtPaylod, config.secret as string, {
-    expiresIn: "1d",
+    expiresIn: "10d",
   });
   return { accesToken };
 };

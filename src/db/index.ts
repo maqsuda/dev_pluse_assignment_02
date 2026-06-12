@@ -36,6 +36,6 @@ export const initDB = async () => {
 
     console.log("database connected");
   } catch (error) {
-    console.log(error);
+    console.log("Error :", error);
   }
 };
