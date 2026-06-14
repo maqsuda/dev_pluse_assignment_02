@@ -12,5 +12,6 @@ dotenv.config({ quiet: true });
 export const config = {
   port: env.PORT as string,
   database_url: env.DATABASE_URL as string,
-  secret: env.JWT_SECRET
+  secret: env.JWT_SECRET,
+  refresh_secret: env.JWT_REFRESH_SECRET,
 };
