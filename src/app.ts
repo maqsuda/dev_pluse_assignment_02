@@ -20,11 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(CookieParser());
 app.use(logger);
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5000",
-//   }),
-// );
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+  }),
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
@@ -34,7 +34,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/users", userRoute);
-app.use("/api/issue", issueRoute);
+app.use("/api/issues", issueRoute);
 app.use("/api/auth", authRoute);
 
 app.use(globalErrorHandler);
