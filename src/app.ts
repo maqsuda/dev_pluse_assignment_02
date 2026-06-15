@@ -28,8 +28,8 @@ app.use(logger);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
-    message: "Express Installed Successfully",
-    author: "Test@test.com",
+    message: "Operation description",
+    data: "Response data",
   });
 });
 

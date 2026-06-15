@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { issueService } from "./issue.service";
 
 const createIssue = async (req: Request, res: Response) => {
-  console.log("create Issue");
+  // console.log("create Issue");
   try {
     const result = await issueService.createIssueFromDB(req.body);
     // console.log(req.body);
