@@ -3,28 +3,6 @@ import { pool } from "../../db";
 import { userService } from "./user.service";
 import sendResponse from "../../utility/sendResponse";
 
-const createUser = async (req: Request, res: Response) => {
-  //   const { name, email, password, role } = req.body;
-
-  try {
-    const result = await userService.createUserToDB(req.body);
-    // console.log(result);
-    sendResponse(res, {
-      statusCode: 201,
-      success: true,
-      message: "User Created successfully!",
-      data: result.rows[0],
-    });
-  } catch (error: any) {
-    sendResponse(res, {
-      statusCode: 500,
-      success: false,
-      message: error.message,
-      error: error,
-    });
-  }
-};
-
 const displayAllUser = async (req: Request, res: Response) => {
   console.log("controller :", req.user);
   try {
@@ -126,7 +104,6 @@ const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const userController = {
-  createUser,
   displayAllUser,
   displaySingleUser,
   updateUser,

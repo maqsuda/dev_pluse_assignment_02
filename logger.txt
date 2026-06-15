@@ -256,3 +256,57 @@ Method -> GET - URL -> /api/users/4 - Time -> 1781458997443
 Method -> POST - URL -> /api/users - Time -> 1781459547983
 
 Method -> POST - URL -> /api/users - Time -> 1781459656053
+
+Method -> POST - URL -> /api/issue - Time -> 1781517244316
+
+Method -> POST - URL -> /api/issue - Time -> 1781517262515
+
+Method -> POST - URL -> /api/issue - Time -> 1781517267271
+
+Method -> POST - URL -> /api/issue - Time -> 1781517299430
+
+Method -> POST - URL -> /api/issue - Time -> 1781517407912
+
+Method -> PUT - URL -> /api/issue - Time -> 1781517421413
+
+Method -> PUT - URL -> /api/issue/1 - Time -> 1781517459347
+
+Method -> GET - URL -> /api/issue - Time -> 1781517552107
+
+Method -> GET - URL -> /api/issue/1 - Time -> 1781517608900
+
+Method -> PUT - URL -> /api/issue/1 - Time -> 1781517674387
+
+Method -> DELETE - URL -> /api/issue/1 - Time -> 1781517745166
+
+Method -> PUT - URL -> /api/issue/1 - Time -> 1781517816900
+
+Method -> PUT - URL -> /api/issue/1 - Time -> 1781517829769
+
+Method -> PUT - URL -> /api/issue/1 - Time -> 1781517935186
+
+Method -> PUT - URL -> /api/issue/2 - Time -> 1781517968186
+
+Method -> PUT - URL -> /api/issue/2 - Time -> 1781518064076
+
+Method -> PUT - URL -> /api/issue/2 - Time -> 1781518103871
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781524687474
+
+Method -> POST - URL -> /api/auth/login - Time -> 1781524748647
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781524764551
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781524930672
+
+Method -> POST - URL -> /api/auth/login - Time -> 1781524963124
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781524995346
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781525041234
+
+Method -> POST - URL -> /api/auth/signup - Time -> 1781525146869
+
+Method -> POST - URL -> /api/auth/login - Time -> 1781525670473
+
+Method -> POST - URL -> /api/auth/login - Time -> 1781525847807
