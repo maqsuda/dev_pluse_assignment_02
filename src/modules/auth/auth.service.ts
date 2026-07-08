@@ -3,7 +3,7 @@ import { pool } from "./../../db/index";
 
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { config } from "../../config";
-import type { IUser } from "../user/user.interface";
+import type { IUser } from "./auth.interface";
 
 const loginUserIntoDB = async (payload: {
   email: string;

@@ -4,7 +4,7 @@ import express, {
   type Response,
 } from "express";
 import { pool } from "./db";
-import { userRoute } from "./modules/user/user.route";
+
 import { authRoute } from "./modules/auth/auth.route";
 import fs from "fs";
 import logger from "./middleware/logger";
@@ -33,7 +33,6 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// app.use("/api/users", userRoute);
 app.use("/api/issues", issueRoute);
 app.use("/api/auth", authRoute);
 

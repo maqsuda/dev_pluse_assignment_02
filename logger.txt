@@ -496,3 +496,7 @@ Method -> PUT - URL -> /api/issues/2 - Time -> 1783514773022
 Method -> PUT - URL -> /api/issues/2 - Time -> 1783514787448
 
 Method -> PUT - URL -> /api/issues/2 - Time -> 1783514790833
+
+Method -> POST - URL -> /api/auth/login - Time -> 1783516763967
+
+Method -> GET - URL -> /api/issues - Time -> 1783516876161
