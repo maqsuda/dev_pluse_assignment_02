@@ -4,20 +4,19 @@ import sendResponse from "../../utility/sendResponse";
 
 const loginUser = async (req: Request, res: Response) => {
   try {
-    const result = await authService.loginUserToDB(req.body);
-
-    const refreshToken = result;
-    const accessToken = result;
+    const result = await authService.loginUserIntoDB(req.body);
+    // console.log("Data :", result);
+    const { refreshToken, user } = result;
 
     res.cookie("refreshToken", refreshToken, {
-      secure: false, //in production ->true
+      secure: false,
       httpOnly: true,
       sameSite: "lax",
     });
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "Login successful",
+      message: "User login successfully!",
       data: result,
     });
   } catch (error: any) {
@@ -52,9 +51,8 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const refreshToken = async (req: Request, res: Response) => {
-  // console.log("Controller part :", req.cookies);
   try {
-    const result = await authService.generateRefreshToken(
+    const result = await authService.generateFreshToken(
       req.cookies.refreshToken,
     );
     res.status(200).json({

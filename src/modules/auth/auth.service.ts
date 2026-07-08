@@ -1,39 +1,89 @@
 import bcrypt from "bcryptjs";
-import { pool } from "../../db";
+import { pool } from "./../../db/index";
+
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { config } from "../../config";
 import type { IUser } from "../user/user.interface";
 
-const loginUserToDB = async (payLoad: { email: string; password: string }) => {
-  const { email, password } = payLoad;
+const loginUserIntoDB = async (payload: {
+  email: string;
+  password: string;
+}) => {
+  const { email, password } = payload;
 
-  const userData = await pool.query(`SELECT * FROM users WHERE email=$1`, [
-    email,
-  ]);
+  const userData = await pool.query(
+    `
+    SELECT * FROM users WHERE email=$1
+    `,
+    [email],
+  );
   if (userData.rows.length === 0) {
-    throw new Error("Invalid Credentials!!");
+    throw new Error("Invalid Credentials!");
   }
+
   const user = userData.rows[0];
+
+  // console.log("User :", user);
   const matchPassword = await bcrypt.compare(password, user.password);
-  // console.log(matchPassword);
+
   if (!matchPassword) {
-    throw new Error("Invalid Credentials!!");
+    throw new Error("Invalid Credentials!");
   }
-  const jwtPaylod = {
+
+  const jwtpayload = {
     id: user.id,
     name: user.name,
-    email: user.email,
     role: user.role,
+    email: user.email,
   };
 
-  const accesToken = jwt.sign(jwtPaylod, config.secret as string, {
+  const accessToken = jwt.sign(jwtpayload, config.secret as string, {
     expiresIn: "1d",
   });
 
-  const refreshToken = jwt.sign(jwtPaylod, config.refresh_secret as string, {
+  const refreshToken = jwt.sign(jwtpayload, config.refresh_secret as string, {
     expiresIn: "10d",
   });
-  return { token: { accesToken, refreshToken }, user: jwtPaylod };
+  delete userData.rows[0].password;
+
+  return { accessToken, refreshToken, user };
+};
+
+const generateFreshToken = async (token: string) => {
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const decoded = jwt.verify(
+    token as string,
+    config.refresh_secret as string,
+  ) as JwtPayload;
+
+  const userData = await pool.query(
+    `
+     SELECT * FROM users WHERE email=$1   
+        `,
+    [decoded.email],
+  );
+
+  const user = userData.rows[0];
+
+  if (userData.rows.length === 0) {
+    throw new Error("User not found!!");
+  }
+
+  const jwtpayload = {
+    id: user.id,
+    name: user.name,
+    role: user.role,
+    email: user.email,
+  };
+
+  const accessToken = jwt.sign(jwtpayload, config.secret as string, {
+    expiresIn: "1d",
+  });
+
+  return { accessToken };
 };
 
 const createUserToDB = async (payLoad: IUser) => {
@@ -53,49 +103,8 @@ const createUserToDB = async (payLoad: IUser) => {
   return result;
 };
 
-const generateRefreshToken = async (token: string) => {
-  if (!token) {
-    throw new Error("Unauthorized");
-  }
-  console.log("Token :", token);
-  const decoded = jwt.verify(
-    token as string,
-    config.refresh_secret as string,
-  ) as JwtPayload;
-
-  const userData = await pool.query(
-    `
-     SELECT * FROM users WHERE email=$1   
-        `,
-    [decoded.email],
-  );
-
-  const user = userData.rows[0];
-
-  if (userData.rows.length === 0) {
-    throw new Error("User not found!!");
-  }
-
-  // if (!user?.is_active) {
-  //   throw new Error("Forbidden!!");
-  // }
-
-  const jwtpayload = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  };
-
-  const accessToken = jwt.sign(jwtpayload, config.secret as string, {
-    expiresIn: "1d",
-  });
-
-  return { accessToken };
-};
-
 export const authService = {
-  loginUserToDB,
   createUserToDB,
-  generateRefreshToken,
+  loginUserIntoDB,
+  generateFreshToken,
 };

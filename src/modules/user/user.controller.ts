@@ -4,7 +4,7 @@ import { userService } from "./user.service";
 import sendResponse from "../../utility/sendResponse";
 
 const displayAllUser = async (req: Request, res: Response) => {
-  console.log("controller :", req.user);
+  // console.log("controller :", req.user);
   try {
     const result = await userService.displayAllUserToDB();
     res.status(200).json({

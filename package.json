@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch ./src/server.ts"
+    "start": "node dist/server.js",
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +31,7 @@
     "express": "^5.2.1",
     "global-error-handler": "^0.0.7",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.21.0"
+    "pg": "^8.21.0",
+    "tsup": "^8.5.1"
   }
 }

@@ -33,7 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.use("/api/users", userRoute);
+// app.use("/api/users", userRoute);
 app.use("/api/issues", issueRoute);
 app.use("/api/auth", authRoute);
 

@@ -1,58 +1,52 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { config } from "../config";
+
 import { pool } from "../db";
 import type { ROLES } from "../types";
+import { config } from "../config";
 
 const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    // console.log("Roles :", roles);
+    // console.log(roles);
     try {
-      // console.log(req.headers.authorization);
       const token = req.headers.authorization;
 
       if (!token) {
         res.status(401).json({
           success: false,
-          message: "Unauthorized Access!!",
+          message: "Unauthorized access!!",
         });
       }
 
-      const decode = jwt.verify(
+      const decoded = jwt.verify(
         token as string,
         config.secret as string,
       ) as JwtPayload;
 
-      const userDate = await pool.query(`SELECT * FROM users WHERE email=$1 `, [
-        decode.email,
-      ]);
-      // console.log(userDate);
-      const user = userDate.rows[0];
-      // console.log(user);
+      const userData = await pool.query(
+        `
+     SELECT * FROM users WHERE email=$1   
+        `,
+        [decoded.email],
+      );
 
-      if (userDate.rows.length === 0) {
+      const user = userData.rows[0];
+
+      if (userData.rows.length === 0) {
         res.status(404).json({
           success: false,
-          message: "User Not Found!!",
+          message: "User not found!",
         });
       }
 
-      // if (!user.is_active) {
-      //   res.status(403).json({
-      //     success: false,
-      //     message: "Forbidden!!",
-      //   });
-      // }
-
-      // console.log("Auth :", user.role);
       if (roles.length && !roles.includes(user.role)) {
         res.status(403).json({
           success: false,
-          message: "Forbidden!! user role",
+          message: "Forbidden!!,This role have no access!",
         });
       }
 
-      req.user = decode;
+      req.user = decoded; // req : { user : {} }
 
       next();
     } catch (error) {
@@ -60,4 +54,5 @@ const auth = (...roles: ROLES[]) => {
     }
   };
 };
+
 export default auth;

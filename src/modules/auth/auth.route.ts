@@ -6,7 +6,7 @@ import auth from "../../middleware/auth";
 const router = Router();
 
 router.post("/login", authController.loginUser);
-router.post("/signup", auth(USER_ROLE.contributor), authController.createUser);
+router.post("/signup", authController.createUser);
 router.post("/refresh-token", authController.refreshToken);
 
 export const authRoute = router;
